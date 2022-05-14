@@ -38,8 +38,13 @@ const MovieDetail = ({ navigation, route }) => {
                     navigation={navigation}
                 />
             {/* Categories & ratings */}
-                <CategoryInfo selectedMovie={selectedMovie} />
+                <CategoryInfo 
+                    selectedMovie={selectedMovie} 
+                />
             {/* Movie Details */}
+                <Details 
+                    selectedMovie={selectedMovie} 
+                />
         </ScrollView>
     )
 }
@@ -227,6 +232,75 @@ const CategoryInfo = ({ selectedMovie }) => {
                         {selectedMovie?.details?.ratings}
                     </Text>
                 </View>
+        </View>
+    )
+}
+
+const Details = ({selectedMovie}) => {
+    return (
+        <View
+            style={{
+                marginTop: SIZES.padding,
+                paddingHorizontal: SIZES.padding,
+                justifyContent: 'space-around',
+                flex: 1
+            }}
+        >
+            {/* Time, running time and progress bar */}
+            <View>
+                {/* Time and running time */}
+                <View
+                    style={{
+                        flexDirection: 'row'
+                    }}
+                >
+                    <Text
+                        style={{
+                            flex: 1,
+                            color: COLORS.white,
+                            ...FONTS.h4
+                        }}
+                    >
+                        {selectedMovie?.details?.currentEpisode}
+                    </Text>
+                    <Text 
+                        style={{
+                            color: COLORS.lightGray,
+                            ...FONTS.body4
+                        }}
+                    >{selectedMovie?.details?.runningTime}</Text>
+                </View>
+
+                {/* Progress Bar */}
+                <ProgressBar
+                    contianerStyle={{
+                        marginTop: SIZES.radius
+                    }}
+                    barStyle={{
+                        height: 5,
+                        borderRadius: 3
+                    }}
+                    barPercentage={selectedMovie?.details?.progress}
+                />
+            </View>
+            {/*  Watch */}
+                <TouchableOpacity
+                    style={{
+                        height: 60,
+                        backgroundColor: COLORS.primary,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        borderRadius: 15,
+                        marginBottom: Platform.OS === 'ios' ? SIZES.padding * 2 : SIZES.padding
+                    }}
+                >
+                    <Text
+                        style={{
+                            color: COLORS.white,
+                            ...FONTS.h2
+                        }}
+                    >{selectedMovie?.details?.progress === "0%" ? "WATCH NOW" : "CONTINUE"}</Text>
+                </TouchableOpacity>
         </View>
     )
 }
